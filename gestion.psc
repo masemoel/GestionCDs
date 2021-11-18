@@ -1,3 +1,36 @@
+SubProceso prebuiltCDs(cd) // códigoCD, nombre, artista, género, localización, ejemplares
+	cd[0,0] <- "1";
+	cd[0,1] <- "Nadar";
+	cd[0,2] <- "Manolito";
+	cd[0,3] <- "Punk";
+	cd[0,4] <- "24";
+	cd[0,5] <- "7";
+	cd[1,0] <- "2";
+	cd[1,1] <- "Libre";
+	cd[1,2] <- "Juana";
+	cd[1,3] <- "Indie";
+	cd[1,4] <- "07";
+	cd[1,5] <- "5";
+	cd[2,0] <- "3";
+	cd[2,1] <- "Nadie";
+	cd[2,2] <- "Solos bien solos";
+	cd[2,3] <- "Pop";
+	cd[2,4] <- "11";
+	cd[2,5] <- "3";
+	cd[3,0] <- "4";
+	cd[3,1] <- "Mola";
+	cd[3,2] <- "Rockers";
+	cd[3,3] <- "Rock";
+	cd[3,4] <- "02";
+	cd[3,5] <- "2";
+	cd[4,0] <- "5";
+	cd[4,1] <- "Volar";
+	cd[4,2] <- "QWERTY";
+	cd[4,3] <- "Pop";
+	cd[4,4] <- "16";
+	cd[4,5] <- "9";
+FinSubProceso
+
 SubProceso pedirUsuario(clientes,numuser, contback Por Referencia)
 	Definir user como caracter; // Variable donde se guarda el DNI del usuario.
 	Definir cont como entero;
@@ -87,6 +120,7 @@ Proceso GestionCDs
 	contback <- 0;
 	Dimension clientes[100,7]; // Vector para guardar la información de todos los usuarios.
 	Dimension cd[250,6]; // Vector para almacenar los CDs disponibles y su información.
+	prebuiltCDs(cd);
 	Dimension alquiler[1000,2]; // Vector para guardar información sobre los alquileres realizados.
 	Escribir "Introduce el número de usuarios de la tienda (máximo = 100).";
 	Leer numuser;
