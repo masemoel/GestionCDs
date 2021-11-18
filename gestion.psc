@@ -1,4 +1,4 @@
-SubProceso prebuiltCDs(cd) // códigoCD, nombre, artista, género, localización, ejemplares
+SubProceso prebuiltCDs(cd,numcd) // códigoCD, nombre, artista, género, localización, ejemplares
 	cd[0,0] <- "1";
 	cd[0,1] <- "Nadar";
 	cd[0,2] <- "Manolito";
@@ -29,6 +29,7 @@ SubProceso prebuiltCDs(cd) // códigoCD, nombre, artista, género, localización, e
 	cd[4,3] <- "Pop";
 	cd[4,4] <- "16";
 	cd[4,5] <- "9";
+	numcd <- 4;
 FinSubProceso
 
 SubProceso pedirUsuario(clientes,numuser, contback Por Referencia)
@@ -113,17 +114,44 @@ SubProceso pedirDatosUsuario(clientes,numuser)
 	FinPara
 FinSubProceso
 
+SubProceso listadoCDs(cd,numcd)
+	Definir cont, cont2 como entero;
+	Para cont <- 0 Hasta numcd Con Paso 1 Hacer
+		Para cont2 <- 0 Hasta 5 Con Paso 1 Hacer
+			Segun cont2 Hacer
+				0:
+					Escribir "";
+					Escribir "Código del disco: ",cd[cont,cont2];
+				1:
+					Escribir "Nombre del disco: ",cd[cont,cont2];
+				2:
+					Escribir "Artista/grupo del disco: ",cd[cont,cont2];
+				3:
+					Escribir "Género del disco: ",cd[cont,cont2];
+				4:
+					Escribir "Estantería: ",cd[cont,cont2];
+				5:
+					Escribir "Ejemplares del disco: ",cd[cont,cont2];
+			FinSegun
+		FinPara
+	FinPara
+FinSubProceso
+
 Proceso GestionCDs
 	Definir clientes, cd, alquiler como caracter;
 	Definir numuser como real; // Cantidad de usuarios totales en el sistema.
-	Definir contback como entero; // Variable 1 del vector CLIENTES donde se encuentra el usuario que inicia sesión.
+	Definir contback, numcd como entero; // Variable 1 del vector CLIENTES donde se encuentra el usuario que inicia sesión.
 	contback <- 0;
+	numcd <- 0;
 	Dimension clientes[100,7]; // Vector para guardar la información de todos los usuarios.
 	Dimension cd[250,6]; // Vector para almacenar los CDs disponibles y su información.
-	prebuiltCDs(cd);
+	prebuiltCDs(cd,numcd);
 	Dimension alquiler[1000,2]; // Vector para guardar información sobre los alquileres realizados.
 	Escribir "Introduce el número de usuarios de la tienda (máximo = 100).";
 	Leer numuser;
 	pedirDatosUsuario(clientes,numuser);
 	pedirUsuario(clientes,numuser, contback);
+	Si clientes[contback,6] = "0" Entonces
+		listadoCDs(cd,numcd);
+	FinSi
 FinProceso
