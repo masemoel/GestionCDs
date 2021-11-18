@@ -1,29 +1,29 @@
-SubProceso prebuiltCDs(cd,numcd) // códigoCD, nombre, artista, género, localización, ejemplares
-	cd[0,0] <- "1";
+SubProceso prebuiltCDs(cd,numcd Por Referencia) // códigoCD, nombre, artista, género, localización, ejemplares
+	cd[0,0] <- "0";
 	cd[0,1] <- "Nadar";
 	cd[0,2] <- "Manolito";
 	cd[0,3] <- "Punk";
 	cd[0,4] <- "24";
 	cd[0,5] <- "7";
-	cd[1,0] <- "2";
+	cd[1,0] <- "1";
 	cd[1,1] <- "Libre";
 	cd[1,2] <- "Juana";
 	cd[1,3] <- "Indie";
 	cd[1,4] <- "07";
 	cd[1,5] <- "5";
-	cd[2,0] <- "3";
+	cd[2,0] <- "2";
 	cd[2,1] <- "Nadie";
 	cd[2,2] <- "Solos bien solos";
 	cd[2,3] <- "Pop";
 	cd[2,4] <- "11";
 	cd[2,5] <- "3";
-	cd[3,0] <- "4";
+	cd[3,0] <- "3";
 	cd[3,1] <- "Mola";
 	cd[3,2] <- "Rockers";
 	cd[3,3] <- "Rock";
 	cd[3,4] <- "02";
 	cd[3,5] <- "2";
-	cd[4,0] <- "5";
+	cd[4,0] <- "4";
 	cd[4,1] <- "Volar";
 	cd[4,2] <- "QWERTY";
 	cd[4,3] <- "Pop";
@@ -135,6 +135,19 @@ SubProceso listadoCDs(cd,numcd)
 			FinSegun
 		FinPara
 	FinPara
+	Escribir "";
+FinSubProceso
+
+SubProceso sacarCD(cd,clientes,contback, alquiler Por Referencia)
+	Definir user como caracter;
+	Definir temp como entero;
+	Escribir sin saltar "Introduce el código del disco que deseas alquilar: ";
+	Leer user;
+	temp <- ConvertirANumero(cd[user,5]) - 1;
+	cd[user,5] <- ConvertirATexto(temp);
+	alquiler[0,0] <- user;
+	alquiler[0,1] <- clientes[contback,0];
+	Escribir "¡Alquiler realizado con éxito!";
 FinSubProceso
 
 Proceso GestionCDs
@@ -153,5 +166,6 @@ Proceso GestionCDs
 	pedirUsuario(clientes,numuser, contback);
 	Si clientes[contback,6] = "0" Entonces
 		listadoCDs(cd,numcd);
+		sacarCD(cd,clientes,contback,alquiler);
 	FinSi
 FinProceso
