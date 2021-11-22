@@ -133,10 +133,41 @@ SubProceso sacarCD(cd,clientes,contback, alquiler Por Referencia)
 	Escribir "¡Alquiler realizado con éxito!";
 FinSubProceso
 
+SubProceso AnadirCD(cd,numcd)
+	Definir cont, cont2 como entero;
+	Escribir "Vamos a añadir los datos del nuevo CD.";
+	numcd <- numcd + 1;
+	Para cont <- numcd Hasta numcd Con Paso 1 Hacer
+		Para cont2 <- 0 Hasta 5 Con Paso 1 Hacer
+			Segun cont2 Hacer
+				0:
+					Escribir "";
+					cd[cont,cont2] <- ConvertirATexto(numcd);
+					Escribir "Código del disco: ",cd[cont,cont2];
+				1:
+					Escribir sin saltar "Nombre del disco: ";
+					Leer cd[cont,cont2];
+				2:
+					Escribir sin saltar "Artista/grupo del disco: ";
+					Leer cd[cont,cont2];
+				3:
+					Escribir sin saltar "Género del disco: ";
+					Leer cd[cont,cont2];
+				4:
+					Escribir sin saltar "Estantería: ";
+					Leer cd[cont,cont2];
+				5:
+					Escribir sin saltar "Ejemplares del disco: ";
+					Leer cd[cont,cont2];
+			FinSegun
+		FinPara
+	FinPara
+FinSubProceso
+
 Proceso GestionCDs
 	Definir clientes, cd, alquiler como caracter;
 	Definir numuser como real; // Cantidad de usuarios totales en el sistema.
-	Definir contback, numcd como entero; // Variable 1 del vector CLIENTES donde se encuentra el usuario que inicia sesión.
+	Definir contback, numcd, user como entero; // Variable 1 del vector CLIENTES donde se encuentra el usuario que inicia sesión.
 	contback <- 0;
 	numcd <- 0;
 	Dimension clientes[100,7]; // Vector para guardar la información de todos los usuarios.
@@ -148,5 +179,26 @@ Proceso GestionCDs
 	Si clientes[contback,6] = "0" Entonces
 		listadoCDs(cd,numcd);
 		sacarCD(cd,clientes,contback,alquiler);
+	SiNo
+		Escribir "Como administrador, tienes la posibilidad de hacer las siguientes operaciones:";
+		Escribir "1. Añadir un CD a la lista.";
+		Escribir "2. Modificar un CD de la lista.";
+		Escribir "3. Eliminar un CD de la lista.";
+		Escribir "0. Salir del programa.";
+		Leer user;
+		Mientras user <> 0 Hacer
+			Segun user Hacer
+				1:
+					AnadirCD(cd,numcd);
+				//2:
+				//	secuencia_de_acciones_2
+				//3:
+				//	secuencia_de_acciones_3
+				De Otro Modo:
+					Escribir "No has introducido un número del programa válido. Recuerda que sólo puedes introducir 0, 1, 2 o 3...";
+			FinSegun
+			Escribir "Terminado. Ahora introduce el número de otra operación (para terminar = 0).";
+			Leer user;
+		FinMientras
 	FinSi
 FinProceso
