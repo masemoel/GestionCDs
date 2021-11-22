@@ -164,7 +164,7 @@ SubProceso AnadirCD(cd,numcd)
 	FinPara
 FinSubProceso
 
-SubProceso ModificarCD(cd,numcd, user Por Referencia)
+SubProceso ModificarCD(cd,user Por Referencia)
 	Definir cont, cont2 como entero;
 	Escribir sin saltar "Vamos a modificar los datos del CD (código) que escogas: ";
 	Leer user;
@@ -192,6 +192,33 @@ SubProceso ModificarCD(cd,numcd, user Por Referencia)
 			FinSegun
 		FinPara
 	FinPara
+FinSubProceso
+
+SubProceso EliminarCD(cd,numcd,user)
+	Definir cont, cont2 como entero;
+	Escribir sin saltar "Vamos a eliminar el CD (código) que escogas de la lista anterior: ";
+	Leer user;
+	numcd <- numcd - 1;
+	Para cont <- user Hasta numcd Con Paso 1 Hacer
+		Para cont2 <- 0 Hasta 5 Con Paso 1 Hacer
+			Segun cont2 Hacer
+				0:
+					Escribir "";
+					cd[cont,cont2] <- cd[cont+1,cont2];
+				1:
+					cd[cont,cont2] <- cd[cont+1,cont2];
+				2:
+					cd[cont,cont2] <- cd[cont+1,cont2];
+				3:
+					cd[cont,cont2] <- cd[cont+1,cont2];
+				4:
+					cd[cont,cont2] <- cd[cont+1,cont2];
+				5:
+					cd[cont,cont2] <- cd[cont+1,cont2];
+			FinSegun
+		FinPara
+	FinPara
+	Escribir "¡Hecho!";
 FinSubProceso
 
 Proceso GestionCDs
@@ -222,9 +249,10 @@ Proceso GestionCDs
 					AnadirCD(cd,numcd);
 				2:
 					listadoCDs(cd,numcd);
-					ModificarCD(cd,numcd,user);
-				//3:
-				//	secuencia_de_acciones_3
+					ModificarCD(cd,user);
+				3:
+					listadoCDs(cd,numcd);
+					EliminarCD(cd,numcd,user);
 				De Otro Modo:
 					Escribir "No has introducido un número del programa válido. Recuerda que sólo puedes introducir 0, 1, 2 o 3...";
 			FinSegun
