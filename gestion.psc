@@ -75,7 +75,7 @@ SubProceso pedirUsuario(clientes,numuser, contback Por Referencia)
 			FinSegun
 		FinPara
 	FinSi
-	Escribir "¡Bienvenido a la plataforma, ",clientes[contback,1],"!";
+	Escribir "¡Bienvenido a la plataforma, ",clientes[contback,0],"!";
 	Si clientes[contback,6] = "0" Entonces
 		Escribir "Rol = usuario.";
 	SiNo
@@ -83,35 +83,18 @@ SubProceso pedirUsuario(clientes,numuser, contback Por Referencia)
 	FinSi
 FinSubProceso
 
-SubProceso pedirDatosUsuario(clientes,numuser)
-	Definir cont1, cont2 como entero;
-	Para cont1<-0 Hasta numuser-1 Con Paso 1 Hacer
-		Para cont2<-0 Hasta 6 Con Paso 1 Hacer
-			Segun cont2 Hacer
-				0:
-					Escribir "Introduzca el DNI del usuario ",cont1+1;
-					Leer clientes[cont1,cont2];
-				1:
-					Escribir "Introduzca el nombre del usuario ",cont1+1;
-					Leer clientes[cont1,cont2];
-				2:
-					Escribir "Introduzca los apellidos del usuario ",cont1+1;
-					Leer clientes[cont1,cont2];
-				3: 
-					Escribir "Introduzca el domicilio del usuario ",cont1+1;
-					Leer clientes[cont1,cont2];
-				4: 
-					Escribir "Introduzca la localidad del usuario ",cont1+1;
-					Leer clientes[cont1,cont2];
-				5: 
-					Escribir "Introduzca la provincia del usuario ",cont1+1;
-					Leer clientes[cont1,cont2];
-				6: 
-					Escribir "Introduzca el rol del usuario ",cont1+1, " (0.- Usuario corriente, 1.- Administrador)";
-					Leer clientes[cont1,cont2];
-			FinSegun
-		FinPara
-	FinPara
+SubProceso DNIsAlmacenados(clientes,numuser Por Referencia)
+	clientes[0,0] <- "98765432X";
+	clientes[0,6] <- "1";
+	clientes[1,0] <- "12345678A";
+	clientes[1,6] <- "0";
+	clientes[2,0] <- "88888888H";
+	clientes[2,6] <- "1";
+	clientes[3,0] <- "77691163S";
+	clientes[3,6] <- "1";
+	clientes[4,0] <- "00000000B";
+	clientes[4,6] <- "0";
+	numuser <- 4;
 FinSubProceso
 
 SubProceso listadoCDs(cd,numcd)
@@ -160,9 +143,7 @@ Proceso GestionCDs
 	Dimension cd[250,6]; // Vector para almacenar los CDs disponibles y su información.
 	prebuiltCDs(cd,numcd);
 	Dimension alquiler[1000,2]; // Vector para guardar información sobre los alquileres realizados.
-	Escribir "Introduce el número de usuarios de la tienda (máximo = 100).";
-	Leer numuser;
-	pedirDatosUsuario(clientes,numuser);
+	DNIsAlmacenados(clientes,numuser);
 	pedirUsuario(clientes,numuser, contback);
 	Si clientes[contback,6] = "0" Entonces
 		listadoCDs(cd,numcd);
