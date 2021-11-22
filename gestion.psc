@@ -164,6 +164,36 @@ SubProceso AnadirCD(cd,numcd)
 	FinPara
 FinSubProceso
 
+SubProceso ModificarCD(cd,numcd, user Por Referencia)
+	Definir cont, cont2 como entero;
+	Escribir sin saltar "Vamos a modificar los datos del CD (código) que escogas: ";
+	Leer user;
+	Para cont <- user Hasta user Con Paso 1 Hacer
+		Para cont2 <- 0 Hasta 5 Con Paso 1 Hacer
+			Segun cont2 Hacer
+				0:
+					Escribir "";
+					Escribir "Código del disco: ",cd[cont,cont2];
+				1:
+					Escribir sin saltar "Nombre del disco: ";
+					Leer cd[cont,cont2];
+				2:
+					Escribir sin saltar "Artista/grupo del disco: ";
+					Leer cd[cont,cont2];
+				3:
+					Escribir sin saltar "Género del disco: ";
+					Leer cd[cont,cont2];
+				4:
+					Escribir sin saltar "Estantería: ";
+					Leer cd[cont,cont2];
+				5:
+					Escribir sin saltar "Ejemplares del disco: ";
+					Leer cd[cont,cont2];
+			FinSegun
+		FinPara
+	FinPara
+FinSubProceso
+
 Proceso GestionCDs
 	Definir clientes, cd, alquiler como caracter;
 	Definir numuser como real; // Cantidad de usuarios totales en el sistema.
@@ -190,8 +220,9 @@ Proceso GestionCDs
 			Segun user Hacer
 				1:
 					AnadirCD(cd,numcd);
-				//2:
-				//	secuencia_de_acciones_2
+				2:
+					listadoCDs(cd,numcd);
+					ModificarCD(cd,numcd,user);
 				//3:
 				//	secuencia_de_acciones_3
 				De Otro Modo:
