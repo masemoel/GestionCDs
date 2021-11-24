@@ -85,14 +85,19 @@ FinSubProceso
 
 SubProceso DNIsAlmacenados(clientes,numuser Por Referencia)
 	clientes[0,0] <- "98765432X";
-	clientes[0,6] <- "1";
+	clientes[0,1] <- "Juan";
+	clientes[0,6] <- "0";
 	clientes[1,0] <- "12345678A";
+	clientes[1,1] <- "Lola";
 	clientes[1,6] <- "0";
 	clientes[2,0] <- "88888888H";
+	clientes[2,1] <- "Javier";
 	clientes[2,6] <- "1";
 	clientes[3,0] <- "77691163S";
+	clientes[3,1] <- "Manuel";
 	clientes[3,6] <- "1";
 	clientes[4,0] <- "00000000B";
+	clientes[4,1] <- "Esteban";
 	clientes[4,6] <- "0";
 	numuser <- 4;
 FinSubProceso
@@ -253,6 +258,17 @@ SubProceso mostrarPorGenero(cd,numcd)
 	Escribir "";
 FinSubProceso
 
+SubProceso listadoClientes(clientes,numuser)
+	Definir cont como entero;
+	Para cont <- 0 Hasta numuser Con Paso 1 Hacer
+		Si clientes[cont,6] = "0" Entonces
+			Escribir "Nombre: " ,clientes[cont,1];
+			Escribir "DNI: " ,clientes[cont,0];
+			Escribir "";
+		FinSi
+	FinPara
+FinSubProceso
+
 Proceso GestionCDs
 	Definir clientes, cd, alquiler como caracter;
 	Definir numuser como real; // Cantidad de usuarios totales en el sistema.
@@ -290,6 +306,7 @@ Proceso GestionCDs
 		Escribir "1. Añadir un CD a la lista.";
 		Escribir "2. Modificar un CD de la lista.";
 		Escribir "3. Eliminar un CD de la lista.";
+		Escribir "4. Listado de los clientes.";
 		Escribir "0. Salir del programa.";
 		Leer user;
 		Mientras user <> 0 Hacer
@@ -302,6 +319,8 @@ Proceso GestionCDs
 				3:
 					listadoCDs(cd,numcd);
 					EliminarCD(cd,numcd,user);
+				4:
+					listadoClientes(clientes,numuser);
 				De Otro Modo:
 					Escribir "No has introducido un número del programa válido. Recuerda que sólo puedes introducir 0, 1, 2 o 3.";
 			FinSegun
