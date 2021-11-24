@@ -221,12 +221,45 @@ SubProceso EliminarCD(cd,numcd,user)
 	Escribir "¡Hecho!";
 FinSubProceso
 
+SubProceso mostrarPorGenero(cd,numcd)
+	Definir cont como entero;
+	Escribir "Discos de rock:";
+	Para cont<-0 Hasta numcd Con Paso 1 Hacer
+		Si cd[cont,3] = "Rock" Entonces
+			Escribir cd[cont,1], " - " ,cd[cont,2];
+		FinSi
+	FinPara
+	Escribir "";
+	Escribir "Discos de pop:";
+	Para cont<-0 Hasta numcd Con Paso 1 Hacer
+		Si cd[cont,3] = "Pop" Entonces
+			Escribir cd[cont,1], " - " ,cd[cont,2];
+		FinSi
+	FinPara
+	Escribir "";
+	Escribir "Discos de punk:";
+	Para cont<-0 Hasta numcd Con Paso 1 Hacer
+		Si cd[cont,3] = "Punk" Entonces
+			Escribir cd[cont,1], " - " ,cd[cont,2];
+		FinSi
+	FinPara
+	Escribir "";
+	Escribir "Discos de indie:";
+	Para cont<-0 Hasta numcd Con Paso 1 Hacer
+		Si cd[cont,3] = "Indie" Entonces
+			Escribir cd[cont,1], " - " ,cd[cont,2];
+		FinSi
+	FinPara
+	Escribir "";
+FinSubProceso
+
 Proceso GestionCDs
 	Definir clientes, cd, alquiler como caracter;
 	Definir numuser como real; // Cantidad de usuarios totales en el sistema.
 	Definir contback, numcd, user como entero; // Variable 1 del vector CLIENTES donde se encuentra el usuario que inicia sesión.
 	contback <- 0;
 	numcd <- 0;
+	user <- 0;
 	Dimension clientes[100,7]; // Vector para guardar la información de todos los usuarios.
 	Dimension cd[250,6]; // Vector para almacenar los CDs disponibles y su información.
 	prebuiltCDs(cd,numcd);
@@ -234,8 +267,24 @@ Proceso GestionCDs
 	DNIsAlmacenados(clientes,numuser);
 	pedirUsuario(clientes,numuser, contback);
 	Si clientes[contback,6] = "0" Entonces
-		listadoCDs(cd,numcd);
-		sacarCD(cd,clientes,contback,alquiler);
+		Escribir "Como cliente, tienes la posibilidad de hacer las siguientes operaciones:";
+		Escribir "1. Alquilar un CD.";
+		Escribir "2. Ordenar los CDs disponibles por su género.";
+		Escribir "0. Salir del programa.";
+		Leer user;
+		Mientras user <> 0 Hacer
+			Segun user Hacer
+				1:
+					listadoCDs(cd,numcd);
+					sacarCD(cd,clientes,contback,alquiler);
+				2:
+					mostrarPorGenero(cd,numcd);
+				De Otro Modo:
+					Escribir "No has introducido un número del programa válido. Recuerda que sólo puedes introducir 0, 1 o 2.";
+			FinSegun
+			Escribir "...Terminado. Ahora introduce el número de otra operación (para terminar = 0).";
+			Leer user;
+		FinMientras
 	SiNo
 		Escribir "Como administrador, tienes la posibilidad de hacer las siguientes operaciones:";
 		Escribir "1. Añadir un CD a la lista.";
@@ -254,9 +303,9 @@ Proceso GestionCDs
 					listadoCDs(cd,numcd);
 					EliminarCD(cd,numcd,user);
 				De Otro Modo:
-					Escribir "No has introducido un número del programa válido. Recuerda que sólo puedes introducir 0, 1, 2 o 3...";
+					Escribir "No has introducido un número del programa válido. Recuerda que sólo puedes introducir 0, 1, 2 o 3.";
 			FinSegun
-			Escribir "Terminado. Ahora introduce el número de otra operación (para terminar = 0).";
+			Escribir "...Terminado. Ahora introduce el número de otra operación (para terminar = 0).";
 			Leer user;
 		FinMientras
 	FinSi
