@@ -126,7 +126,7 @@ SubProceso listadoCDs(cd,numcd)
 	Escribir "";
 FinSubProceso
 
-SubProceso sacarCD(cd,clientes,contback, alquiler Por Referencia)
+SubProceso sacarCD(cd,clientes,contback, alquiler Por Referencia, alquileres Por Referencia)
 	Definir user como caracter;
 	Definir temp como entero;
 	Escribir sin saltar "Introduce el código del disco que deseas alquilar: ";
@@ -135,6 +135,7 @@ SubProceso sacarCD(cd,clientes,contback, alquiler Por Referencia)
 	cd[user,5] <- ConvertirATexto(temp);
 	alquiler[0,0] <- user;
 	alquiler[0,1] <- clientes[contback,0];
+	alquileres <- alquileres + 1;
 	Escribir "¡Alquiler realizado con éxito!";
 FinSubProceso
 
@@ -269,13 +270,23 @@ SubProceso listadoClientes(clientes,numuser)
 	FinPara
 FinSubProceso
 
+SubProceso alquileresEnCurso(alquiler,alquileres)
+	Definir cont como entero;
+	Para cont <- 0 Hasta alquileres-1 Con Paso 1 Hacer
+		Escribir "Disco alquilado: ",alquiler[cont,0];
+		Escribir "Cliente: ",alquiler[cont,0];
+		Escribir "";
+	FinPara
+FinSubProceso
+
 Proceso GestionCDs
 	Definir clientes, cd, alquiler como caracter;
 	Definir numuser como real; // Cantidad de usuarios totales en el sistema.
-	Definir contback, numcd, user como entero; // Variable 1 del vector CLIENTES donde se encuentra el usuario que inicia sesión.
+	Definir contback, numcd, user, alquileres como entero; // Variable 1 del vector CLIENTES donde se encuentra el usuario que inicia sesión.
 	contback <- 0;
 	numcd <- 0;
 	user <- 0;
+	alquileres <- 0;
 	Dimension clientes[100,7]; // Vector para guardar la información de todos los usuarios.
 	Dimension cd[250,6]; // Vector para almacenar los CDs disponibles y su información.
 	prebuiltCDs(cd,numcd);
@@ -292,7 +303,7 @@ Proceso GestionCDs
 			Segun user Hacer
 				1:
 					listadoCDs(cd,numcd);
-					sacarCD(cd,clientes,contback,alquiler);
+					sacarCD(cd,clientes,contback,alquiler,alquileres);
 				2:
 					mostrarPorGenero(cd,numcd);
 				De Otro Modo:
@@ -307,6 +318,7 @@ Proceso GestionCDs
 		Escribir "2. Modificar un CD de la lista.";
 		Escribir "3. Eliminar un CD de la lista.";
 		Escribir "4. Listado de los clientes.";
+		Escribir "5. Mostrar alquieres en curso.";
 		Escribir "0. Salir del programa.";
 		Leer user;
 		Mientras user <> 0 Hacer
@@ -321,6 +333,8 @@ Proceso GestionCDs
 					EliminarCD(cd,numcd,user);
 				4:
 					listadoClientes(clientes,numuser);
+				5:
+					alquileresEnCurso(alquiler,alquileres);
 				De Otro Modo:
 					Escribir "No has introducido un número del programa válido. Recuerda que sólo puedes introducir 0, 1, 2 o 3.";
 			FinSegun
