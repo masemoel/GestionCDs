@@ -1,4 +1,4 @@
-SubProceso prebuiltCDs(cd,numcd Por Referencia) // códigoCD, nombre, artista, género, localización, ejemplares
+SubProceso prebuiltCDs(cd Por Referencia,numcd Por Referencia) // códigoCD, nombre, artista, género, localización, ejemplares
 	cd[0,0] <- "0";
 	cd[0,1] <- "Nadar";
 	cd[0,2] <- "Manolito";
@@ -47,33 +47,22 @@ SubProceso pedirUsuario(clientes,numuser, contback Por Referencia)
 		FinSi
 	FinPara
 	Si entrada = falso Entonces
-		Escribir "No se ha encontrado un cliente con ese DNI. Vamos a registrarte en la plataforma.";
-		Para cont <- 0 Hasta 6 Con Paso 1 Hacer
-			Segun cont Hacer
-				0:
-					Escribir "Introduzca el DNI del usuario";
-					Leer clientes[numuser,cont];
-				1:
-					Escribir "Introduzca el nombre del usuario";
-					Leer clientes[numuser,cont];
-				2:
-					Escribir "Introduzca los apellidos del usuario";
-					Leer clientes[numuser,cont];
-				3: 
-					Escribir "Introduzca el domicilio del usuario";
-					Leer clientes[numuser,cont];
-				4: 
-					Escribir "Introduzca la localidad del usuario";
-					Leer clientes[numuser,cont];
-				5: 
-					Escribir "Introduzca la provincia del usuario";
-					Leer clientes[numuser,cont];
-				6: 
-					Escribir "Introduzca el rol del usuario (0.- Usuario corriente, 1.- Administrador)";
-					Leer clientes[numuser,cont];
-					contback <- numuser;
-			FinSegun
-		FinPara
+		Escribir "No se ha encontrado un cliente con ese DNI. Vamos a registrarte en la plataforma...";
+		Escribir "Introduzca el DNI del usuario";
+		Leer clientes[numuser,0];
+		Escribir "Introduzca el nombre del usuario";
+		Leer clientes[numuser,1];
+		Escribir "Introduzca los apellidos del usuario";
+		Leer clientes[numuser,2];
+		Escribir "Introduzca el domicilio del usuario";
+		Leer clientes[numuser,3];
+		Escribir "Introduzca la localidad del usuario";
+		Leer clientes[numuser,4];
+		Escribir "Introduzca la provincia del usuario";
+		Leer clientes[numuser,5];
+		Escribir "Introduzca el rol del usuario (0.- Usuario corriente, 1.- Administrador)";
+		Leer clientes[numuser,6];
+		contback <- numuser;
 	FinSi
 	Escribir "¡Bienvenido a la plataforma, ",clientes[contback,0],"!";
 	Si clientes[contback,6] = "0" Entonces
@@ -103,25 +92,15 @@ SubProceso DNIsAlmacenados(clientes,numuser Por Referencia)
 FinSubProceso
 
 SubProceso listadoCDs(cd,numcd)
-	Definir cont, cont2 como entero;
+	Definir cont como entero;
 	Para cont <- 0 Hasta numcd Con Paso 1 Hacer
-		Para cont2 <- 0 Hasta 5 Con Paso 1 Hacer
-			Segun cont2 Hacer
-				0:
-					Escribir "";
-					Escribir "Código del disco: ",cd[cont,cont2];
-				1:
-					Escribir "Nombre del disco: ",cd[cont,cont2];
-				2:
-					Escribir "Artista/grupo del disco: ",cd[cont,cont2];
-				3:
-					Escribir "Género del disco: ",cd[cont,cont2];
-				4:
-					Escribir "Estantería: ",cd[cont,cont2];
-				5:
-					Escribir "Ejemplares del disco: ",cd[cont,cont2];
-			FinSegun
-		FinPara
+		Escribir "";
+		Escribir "Código del disco: ",cd[cont,0];
+		Escribir "Nombre del disco: ",cd[cont,1];
+		Escribir "Artista/grupo del disco: ",cd[cont,2];
+		Escribir "Género del disco: ",cd[cont,3];
+		Escribir "Estantería: ",cd[cont,4];
+		Escribir "Ejemplares del disco: ",cd[cont,5];
 	FinPara
 	Escribir "";
 FinSubProceso
@@ -133,70 +112,49 @@ SubProceso sacarCD(cd,clientes,contback, alquiler Por Referencia, alquileres Por
 	Leer user;
 	temp <- ConvertirANumero(cd[user,5]) - 1;
 	cd[user,5] <- ConvertirATexto(temp);
-	alquiler[0,0] <- user;
-	alquiler[0,1] <- clientes[contback,0];
 	alquileres <- alquileres + 1;
-	Escribir "¡Alquiler realizado con éxito!";
+	alquiler[alquileres,0] <- user;
+	alquiler[alquileres,1] <- clientes[contback,0];
 FinSubProceso
 
 SubProceso AnadirCD(cd,numcd)
-	Definir cont, cont2 como entero;
+	Definir cont como entero;
 	Escribir "Vamos a añadir los datos del nuevo CD.";
 	numcd <- numcd + 1;
 	Para cont <- numcd Hasta numcd Con Paso 1 Hacer
-		Para cont2 <- 0 Hasta 5 Con Paso 1 Hacer
-			Segun cont2 Hacer
-				0:
-					Escribir "";
-					cd[cont,cont2] <- ConvertirATexto(numcd);
-					Escribir "Código del disco: ",cd[cont,cont2];
-				1:
-					Escribir sin saltar "Nombre del disco: ";
-					Leer cd[cont,cont2];
-				2:
-					Escribir sin saltar "Artista/grupo del disco: ";
-					Leer cd[cont,cont2];
-				3:
-					Escribir sin saltar "Género del disco: ";
-					Leer cd[cont,cont2];
-				4:
-					Escribir sin saltar "Estantería: ";
-					Leer cd[cont,cont2];
-				5:
-					Escribir sin saltar "Ejemplares del disco: ";
-					Leer cd[cont,cont2];
-			FinSegun
-		FinPara
+		Escribir "";
+		cd[cont,0] <- ConvertirATexto(numcd);
+		Escribir "Código del disco: ",cd[cont,0];
+		Escribir sin saltar "Nombre del disco: ";
+		Leer cd[cont,1];
+		Escribir sin saltar "Artista/grupo del disco: ";
+		Leer cd[cont,2];
+		Escribir sin saltar "Género del disco: ";
+		Leer cd[cont,3];
+		Escribir sin saltar "Estantería: ";
+		Leer cd[cont,4];
+		Escribir sin saltar "Ejemplares del disco: ";
+		Leer cd[cont,5];
 	FinPara
 FinSubProceso
 
 SubProceso ModificarCD(cd,user Por Referencia)
-	Definir cont, cont2 como entero;
+	Definir cont como entero;
 	Escribir sin saltar "Vamos a modificar los datos del CD (código) que escogas: ";
 	Leer user;
 	Para cont <- user Hasta user Con Paso 1 Hacer
-		Para cont2 <- 0 Hasta 5 Con Paso 1 Hacer
-			Segun cont2 Hacer
-				0:
-					Escribir "";
-					Escribir "Código del disco: ",cd[cont,cont2];
-				1:
-					Escribir sin saltar "Nombre del disco: ";
-					Leer cd[cont,cont2];
-				2:
-					Escribir sin saltar "Artista/grupo del disco: ";
-					Leer cd[cont,cont2];
-				3:
-					Escribir sin saltar "Género del disco: ";
-					Leer cd[cont,cont2];
-				4:
-					Escribir sin saltar "Estantería: ";
-					Leer cd[cont,cont2];
-				5:
-					Escribir sin saltar "Ejemplares del disco: ";
-					Leer cd[cont,cont2];
-			FinSegun
-		FinPara
+		Escribir "";
+		Escribir "Código del disco: ",cd[cont,0];
+		Escribir sin saltar "Nombre del disco: ";
+		Leer cd[cont,1];
+		Escribir sin saltar "Artista/grupo del disco: ";
+		Leer cd[cont,2];
+		Escribir sin saltar "Género del disco: ";
+		Leer cd[cont,3];
+		Escribir sin saltar "Estantería: ";
+		Leer cd[cont,4];
+		Escribir sin saltar "Ejemplares del disco: ";
+		Leer cd[cont,5];
 	FinPara
 FinSubProceso
 
@@ -206,25 +164,14 @@ SubProceso EliminarCD(cd,numcd,user)
 	Leer user;
 	numcd <- numcd - 1;
 	Para cont <- user Hasta numcd Con Paso 1 Hacer
-		Para cont2 <- 0 Hasta 5 Con Paso 1 Hacer
-			Segun cont2 Hacer
-				0:
-					Escribir "";
-					cd[cont,cont2] <- cd[cont+1,cont2];
-				1:
-					cd[cont,cont2] <- cd[cont+1,cont2];
-				2:
-					cd[cont,cont2] <- cd[cont+1,cont2];
-				3:
-					cd[cont,cont2] <- cd[cont+1,cont2];
-				4:
-					cd[cont,cont2] <- cd[cont+1,cont2];
-				5:
-					cd[cont,cont2] <- cd[cont+1,cont2];
-			FinSegun
-		FinPara
+		Escribir "";
+		cd[cont,cont2] <- cd[cont+1,0];
+		cd[cont,cont2] <- cd[cont+1,1];
+		cd[cont,cont2] <- cd[cont+1,2];
+		cd[cont,cont2] <- cd[cont+1,3];
+		cd[cont,cont2] <- cd[cont+1,4];
+		cd[cont,cont2] <- cd[cont+1,5];
 	FinPara
-	Escribir "¡Hecho!";
 FinSubProceso
 
 SubProceso mostrarPorGenero(cd,numcd)
@@ -292,7 +239,7 @@ Proceso GestionCDs
 	prebuiltCDs(cd,numcd);
 	Dimension alquiler[1000,2]; // Vector para guardar información sobre los alquileres realizados.
 	DNIsAlmacenados(clientes,numuser);
-	pedirUsuario(clientes,numuser, contback);
+	pedirUsuario(clientes,numuser,contback);
 	Si clientes[contback,6] = "0" Entonces
 		Escribir "Como cliente, tienes la posibilidad de hacer las siguientes operaciones:";
 		Escribir "1. Alquilar un CD.";
@@ -318,7 +265,7 @@ Proceso GestionCDs
 		Escribir "2. Modificar un CD de la lista.";
 		Escribir "3. Eliminar un CD de la lista.";
 		Escribir "4. Listado de los clientes.";
-		Escribir "5. Mostrar alquieres en curso.";
+		Escribir "5. Mostrar alquileres en curso.";
 		Escribir "0. Salir del programa.";
 		Leer user;
 		Mientras user <> 0 Hacer
@@ -336,7 +283,7 @@ Proceso GestionCDs
 				5:
 					alquileresEnCurso(alquiler,alquileres);
 				De Otro Modo:
-					Escribir "No has introducido un número del programa válido. Recuerda que sólo puedes introducir 0, 1, 2 o 3.";
+					Escribir "No has introducido un número del programa válido. Recuerda que sólo puedes introducir 0, 1, 2, 3, 4 o 5.";
 			FinSegun
 			Escribir "...Terminado. Ahora introduce el número de otra operación (para terminar = 0).";
 			Leer user;
